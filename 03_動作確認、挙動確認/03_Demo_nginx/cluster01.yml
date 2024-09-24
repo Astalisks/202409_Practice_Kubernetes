@@ -1,0 +1,16 @@
+# Kubernetesクラスターの設定ファイル
+kind: Cluster  # クラスターの定義
+apiVersion: kind.x-k8s.io/v1alpha4  # KindのAPIバージョン
+nodes:
+  - role: control-plane  # コントロールプレーンノード（クラスターの管理を行う）
+    extraPortMappings:
+      # control-planeに外部からアクセスできるポートをマッピング
+      - containerPort: 30001  # クラスター内のポート30001をlocalhostにマッピング
+        hostPort: 30001
+      - containerPort: 30002  # クラスター内のポート30002をlocalhostにマッピング
+        hostPort: 30002
+      - containerPort: 30003  # クラスター内のポート30003をlocalhostにマッピング
+        hostPort: 30003
+  - role: worker  # ワーカーノードの定義（アプリケーションの処理を行う）
+  - role: worker
+  - role: worker

@@ -1,0 +1,20 @@
+# Deploymentリソースは複数のPodを管理・指定した数のインスタンスを維持する
+apiVersion: apps/v1  # APIのバージョンを指定
+kind: Deployment     # リソースの種類としてDeploymentを定義
+metadata:
+  name: nginx-deployment  # Deploymentの名前
+spec:
+  replicas: 3  # Podのレプリカ数（ここでは3つのNGINXインスタンス）
+  selector:
+    matchLabels:
+      app: nginx  # このラベルに一致するPodを管理対象とする
+  template:
+    metadata:
+      labels:
+        app: nginx  # Podに付与するラベル
+    spec:
+      containers:
+      - name: nginx  # Kubernetes内部で識別するための名前
+        image: nginx:latest  # コンテナイメージ
+        ports:
+        - containerPort: 80  # コンテナ内部でlistenするport番号

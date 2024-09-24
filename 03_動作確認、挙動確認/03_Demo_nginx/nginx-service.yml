@@ -1,0 +1,27 @@
+# Serviceリソースは、Pod間または外部からPodへの通信を管理
+# NodePortを使用して外部からアクセス可能
+apiVersion: v1  # APIのバージョン
+kind: Service   # リソースの種類としてServiceを定義
+metadata:
+  name: nginx-service  # Serviceの名前
+spec:
+  selector:
+    app: nginx  # Deploymentで定義したラベルを持つPodが対象
+  type: NodePort  # Serviceのタイプ（NodePortを指定し、外部アクセスを許可）
+  ports:
+    - name: "nginx-port-1"
+      protocol: TCP
+      port: 8081  # Serviceが公開するポート番号（クラスター内で使われる）
+      targetPort: 80  # Pod内でリッスンしているポート番号
+      nodePort: 30001
+    - name: "nginx-port-2"
+      protocol: TCP
+      port: 8082
+      targetPort: 80
+      nodePort: 30002
+    - name: "nginx-port-3"
+      protocol: TCP
+      port: 8083
+      targetPort: 80
+      nodePort: 30003
+# localhost:30001、localhost:30002、localhost:30003でNGINXにアクセス可能
